@@ -1,0 +1,54 @@
+<style>
+    .wrapper-product {
+        position: relative;
+        width: 1140px;
+        overflow: hidden;
+    }
+    .wrapper-product .item-product {
+        float: left;
+        width: 340px;
+        margin: 20px;
+        height: 180px;
+    }
+</style> 
+<script type="text/template" id="list-template">
+<div class="wrapper-product">
+    <% _.each(data, function(item) { %>
+    <div class="panel panel-primary item-product">
+        <div class="panel-heading">Producto
+        </div>
+        <div class="panel-body">
+	    <% for( col in columns) { %>
+	        <% if(item.get(columns[col].name)){ %>
+                        <strong><%= htmlEncode(columns[col].displayName) %>:</strong>
+		        <%= htmlEncode(item.getDisplay(columns[col].name)) %> 
+                        </br>
+	        <% } %>
+            <% } %> 
+        <% _.each(actions, function(action){ %>
+            <% if(action.get('show')){ %>
+	       <a class="btn btn-xs" onclick="Backbone.trigger('<%= componentId %>-<%= name %>-<%= action.get('name') %>', {id: <%= item.id %> }); return false" ><%= action.get('displayName') %></a>
+	<% }}); %>	
+        </div>
+    </div>
+    <% }); %>
+</div>
+ <% if(pagination){ %>
+	<div class="text-center">
+	    <ul class="pagination">
+		<% if(page > 3){ %>
+		    <li><a href="#" onclick="Backbone.trigger('<%= componentId %>-<%= name %>-changePage',{page: 1})">1</a></li>
+		    <li class="disabled"><a>...</a></li>
+		<% } %>
+		<% for(var i = -2; i < 3; i++) if(page+i > 0 && page+i <= pages){ %>
+		    <li <%= i==0?'class="active"':''%> ><a onclick="Backbone.trigger('<%= componentId %>-<%= name %>-changePage',{page: <%= page+i %>})" href="#"><%= page+i %></a></li>
+		<% } %>
+		<% if(page < pages-2){ %>
+		    <li class="disabled"><a>...</a></li>    
+		    <li><a href="#" onclick="Backbone.trigger('<%= componentId %>-<%= name %>-changePage',{page: <%= pages %>})"><%= pages %></a></li>
+		<% } %>
+	    </ul>
+	</div>
+    <% } %>
+
+</script>
