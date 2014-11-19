@@ -261,7 +261,7 @@ define(['controller/selectionController', 'model/cacheModel', 'model/buyerMaster
        },
         facebook: function() {
             hello.init({
-                'facebook' : '751100841593326'
+                'facebook' : '597983760329002'
             },
             {
                 scope : 'email',
